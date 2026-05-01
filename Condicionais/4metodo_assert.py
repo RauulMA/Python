@@ -1,5 +1,5 @@
 def pode_votar(nome: str, idade: int) -> str:
-    #assert idade > 0, "Digite um número positivo." #apenas verifica se há erros na produção, não na comercialização
+    assert idade > 0, "Digite um número positivo."
     if idade < 16:
         return f"{nome} não tem direito ao voto."
     elif (idade < 18) or (idade >= 70):

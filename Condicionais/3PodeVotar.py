@@ -1,12 +1,3 @@
-
-# nota = verificar_valor_positivo("Digite sua nota: ")
-# presenca = verificar_valor_positivo("Digite sua presenca: ")
-
-# passou = presenca >= 75 and nota >= 6
-# exame = presenca >= 75 and (nota >= 4 and nota <= 6)
-
-# print(f"Seu resultado:\nVocê passou: {passou}\nVocê pode fazer o exame para passar: {exame}")
-
 def verificar_valor_positivo(mensagem):
     while True:
         try:
