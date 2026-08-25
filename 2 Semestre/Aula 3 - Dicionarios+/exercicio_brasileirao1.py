@@ -1,4 +1,3 @@
-# Versao nova
 # Lista de exercicios - brasileirao1 (leitura de json e dicionarios)
 # Dados reais do campeonato brasileiro 2018, num arquivo ano2018.json.
 # Aprender: ler dicionarios e estruturas aninhadas (dict dentro de dict,
@@ -85,7 +84,7 @@ def explicar(questao):
 # pasta deste arquivo). A funcao pega_dados le o arquivo pra voce - nao
 # se preocupe com como ela funciona.
 def pega_dados():
-    with open('ano2018.json', encoding="utf-8") as f:
+    with open('ano2018.json') as f:
         dados = json.load(f)
     return dados
 
@@ -176,11 +175,11 @@ dados2018, que ja esta carregado no comeco do arquivo.
    com o caminho do 1 (o [0] vira a CHAVE
    do dicionario de equipes).
 '''
-nome_comum_do_time_6        = 'coloque o valor aqui'
-quantos_times_no_campeonato = 'coloque o valor aqui'
-id_do_primeiro_colocado     = 'coloque o valor aqui'
-faixa_da_libertadores       = 'coloque o valor aqui'
-nome_comum_do_primeiro_colocado = 'coloque o valor aqui'
+nome_comum_do_time_6        = dados2018['equipes']['6']['nome-comum']
+quantos_times_no_campeonato = len(dados2018['equipes'])
+id_do_primeiro_colocado     = dados2018['fases']['2700']['classificacao']['grupo']['unico'][0]
+faixa_da_libertadores       = dados2018['fases']['2700']['faixas-classificacao']['classifica1']['faixa']
+nome_comum_do_primeiro_colocado = dados2018['equipes']['17']['nome-comum']
 
 # Travou na 5? Descomente a linha abaixo para ler a explicacao:
 # explicar('nome_comum_do_primeiro_colocado')
@@ -209,7 +208,7 @@ O que eh `dados['equipes']`?
        (nome-comum, sigla, nome, ...)
     d) um dicionario: para cada nome de time, a id dele
 '''
-o_que_e_dados_equipes = 'coloque o valor aqui'   # 'a', 'b', 'c' ou 'd'
+o_que_e_dados_equipes = 'c'   # 'a', 'b', 'c' ou 'd'
 
 # Travou? Descomente a linha abaixo para ler a explicacao:
 # explicar('o_que_e_dados_equipes')
@@ -229,7 +228,7 @@ O que acontece com `dados['equipes'][0]`?
     c) devolve o Corinthians (que eh o time de "primeiro" no coracao)
     d) devolve uma lista com todos os times
 '''
-por_que_equipes_0_falha = 'coloque o valor aqui'   # 'a', 'b', 'c' ou 'd'
+por_que_equipes_0_falha = 'a'   # 'a', 'b', 'c' ou 'd'
 
 # Travou? Descomente a linha abaixo para ler a explicacao:
 # explicar('por_que_equipes_0_falha')
@@ -270,7 +269,7 @@ PRIMEIRA posicao da classificacao)?
     j) primeira_id = dados['fases']['2700']['classificacao']['grupo']['unico'][0]
        dados['equipes'][primeira_id]['sigla']
 '''
-caminho_ate_o_campeao = 'coloque o valor aqui'   # 'a' a 'j'
+caminho_ate_o_campeao = 'f'   # 'a' a 'j'
 
 # Travou? Descomente a linha abaixo para ler a explicacao:
 # explicar('caminho_ate_o_campeao')
@@ -292,7 +291,7 @@ o campo 'nome-comum'.
     'Flamengo'
 '''
 def nome_do_time(dados, id_numerica):
-    pass
+    return dados['equipes'][id_numerica]['nome-comum']
 
 assert nome_do_time(dados2018, '1') == 'Flamengo', 'nome_do_time(dados2018, "1") deveria ser "Flamengo"'
 assert nome_do_time(dados2018, '695') == 'Chapecoense', 'nome_do_time(dados2018, "695") deveria ser "Chapecoense"'
@@ -331,7 +330,7 @@ PRIMEIRO elemento da lista de classificacao.
     '17'
 '''
 def id_campeao(dados):
-    pass
+    return dados['fases']['2700']['classificacao']['grupo']['unico'][0]
 
 assert id_campeao(dados2018) == '17', 'id_campeao(dados2018) deveria ser "17"'
 
@@ -371,7 +370,7 @@ USANDO as funcoes id_campeao e nome_do_time (nao leia a estrutura de novo).
     'Palmeiras'
 '''
 def nome_campeao(dados):
-    pass
+    return dados['equipes'][dados['fases']['2700']['classificacao']['grupo']['unico'][0]]['nome-comum']
 
 assert nome_campeao(dados2018) == 'Palmeiras', 'nome_campeao(dados2018) deveria ser "Palmeiras"'
 assert nome_campeao(dados_falsificado) == 'Flamengo', 'nome_campeao deve reusar id_campeao (no campeonato falsificado o campeao eh o Flamengo)'
@@ -401,7 +400,7 @@ EXERCICIO
 Calculo a mao (de leitura). A faixa do classifica1 vale '1-6' nos dados:
 quantos times ela cobre? (primeira posicao ate a sexta posicao)
 '''
-quantos_libertadores_a_mao = 'coloque o valor aqui'
+quantos_libertadores_a_mao = 6
 
 assert verifica(quantos_libertadores_a_mao, '45c4470b227bfbf724de91f50c3d9ede4154335bb79d1e8d058a6b02', nome_questao='quantos_libertadores_a_mao'), 'quantos_libertadores_a_mao incorreta'
 print('Exercicio calculo a mao (faixa da libertadores): OK')
@@ -418,7 +417,7 @@ e use split e int (como na EXPLICACAO acima).
     6
 '''
 def qtos_libertadores(dados):
-    pass
+    return int(dados['fases']['2700']['faixas-classificacao']['classifica1']['faixa'][2]) - int(dados['fases']['2700']['faixas-classificacao']['classifica1']['faixa'][0]) + 1
 
 assert qtos_libertadores(dados2018) == 6, 'qtos_libertadores(dados2018) deveria ser 6'
 
@@ -439,7 +438,7 @@ Calculo a mao. A classificacao comeca assim:
 
 Quais as ids dos 3 MELHORES classificados? (os 3 primeiros da lista)
 '''
-tres_melhor_a_mao = 'coloque o valor aqui'
+tres_melhor_a_mao = ['17', '1', '15']
 
 assert verifica(tres_melhor_a_mao, '994de72a1db8662510676551e6a12a37c4e2209eb1dda0cb546e357f', ordem_importa=True, nome_questao='tres_melhor_a_mao'), 'tres_melhor_a_mao incorreta'
 print('Exercicio calculo a mao (3 melhores): OK')
@@ -457,8 +456,10 @@ classificacao[:numero_de_times] devolve os numero_de_times primeiros.
     ['17', '1', '15']
 '''
 def ids_dos_melhor_classificados(dados, numero_de_times):
-    pass
+    return [dados for x in dados['fases']['2700']['classificacao']['grupo']['unico']]
+    #return dados['fases']['2700']['classificacao']['grupo']['unico']
 
+print( ids_dos_melhor_classificados(dados2018, 10))
 assert ids_dos_melhor_classificados(dados2018, 10) == ['17', '1', '15', '13', '24', '4', '3', '9', '5', '22'], '10 melhores'
 assert ids_dos_melhor_classificados(dados2018, 5) == ['17', '1', '15', '13', '24'], '5 melhores'
 assert ids_dos_melhor_classificados(dados2018, 3) == ['17', '1', '15'], '3 melhores'
