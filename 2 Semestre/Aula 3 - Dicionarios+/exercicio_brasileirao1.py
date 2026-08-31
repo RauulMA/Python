@@ -456,8 +456,10 @@ classificacao[:numero_de_times] devolve os numero_de_times primeiros.
     ['17', '1', '15']
 '''
 def ids_dos_melhor_classificados(dados, numero_de_times):
-    return [dados for x in dados['fases']['2700']['classificacao']['grupo']['unico']]
-    #return dados['fases']['2700']['classificacao']['grupo']['unico']
+    melh_class = []
+    for x in range(0, numero_de_times):
+        melh_class.append(dados['fases']['2700']['classificacao']['grupo']['unico'][x])
+    return melh_class
 
 print( ids_dos_melhor_classificados(dados2018, 10))
 assert ids_dos_melhor_classificados(dados2018, 10) == ['17', '1', '15', '13', '24', '4', '3', '9', '5', '22'], '10 melhores'
@@ -495,7 +497,7 @@ Fase 4.
     ['17', '1', '15', '13', '24', '4']
 '''
 def classificados_libertadores(dados):
-    pass
+    return ids_dos_melhor_classificados(dados, int(dados['fases']['2700']['faixas-classificacao']['classifica1']['faixa'][2]))
 
 assert classificados_libertadores(dados2018) == ['17', '1', '15', '13', '24', '4'], 'classificados_libertadores(dados2018)'
 
@@ -516,7 +518,7 @@ Calculo a mao. Os 4 primeiros da classificacao:
 
 Quais os nomes dos 3 primeiros? (na ordem)
 '''
-tres_nomes_a_mao = 'coloque o valor aqui'
+tres_nomes_a_mao = ['Palmeiras', 'Flamengo', 'Internacional']
 
 assert verifica(tres_nomes_a_mao, 'ae5225bb79abab3f38d2e6ed314844e59d2f376104a631735ad1c474', ordem_importa=True, nome_questao='tres_nomes_a_mao'), 'tres_nomes_a_mao incorreta'
 print('Exercicio calculo a mao (nomes dos 3 melhores): OK')
@@ -533,7 +535,10 @@ classificados_libertadores e nome_do_time.
     ['Palmeiras', 'Flamengo', 'Internacional']
 '''
 def nomes_classificados_libertadores(dados):
-    pass
+    class_libertadores = []
+    for x in range(0, int(dados['fases']['2700']['faixas-classificacao']['classifica1']['faixa'][2])):
+                   class_libertadores.append(dados['equipes'][dados['fases']['2700']['classificacao']['grupo']['unico'][x]]['nome-comum'])
+    return class_libertadores
 
 # FALSIFICACAO: faixa para 1-3 - agora os classificados sao so 3
 dados_falsificado = pega_dados()
